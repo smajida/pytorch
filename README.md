@@ -272,3 +272,47 @@ PyTorch is currently maintained by [Adam Paszke](https://apaszke.github.io/), [S
 A non-exhaustive but growing list needs to mention: Trevor Killeen, Sasank Chilamkurthy, Sergey Zagoruyko, Adam Lerer, Francisco Massa, Alykhan Tejani, Luca Antiga, Alban Desmaison, Andreas Kopf, James Bradbury, Zeming Lin, Yuandong Tian, Guillaume Lample, Marat Dukhan, Natalia Gimelshein, Christian Sarofeen, Martin Raison, Edward Yang, Zachary Devito.
 
 Note: this project is unrelated to [hughperkins/pytorch](https://github.com/hughperkins/pytorch) with the same name. Hugh is a valuable contributor in the Torch community and has helped with many things Torch and PyTorch.
+
+
+
+# Installation errors:
+home/majid/Myprojects/pytorch/caffe2/operators/conv_op_eigen.cc:8:2: error: #error "Caffe2 requires Eigen to be at least 3.3.0.";
+ #error "Caffe2 requires Eigen to be at least 3.3.0.";
+  ^
+
+solution:
+ 5
+down vote
+accepted
+
+The solution is:
+
+    Check the Eigen version with: cat /usr/include/eigen3/Eigen/src/Core/util/Macros.h | grep VERSION
+
+It will show some version variable values like below:
+
+EIGEN_WORLD_VERSION 3
+ EIGEN_MAJOR_VERSION 2
+ EIGEN_MINOR_VERSION 192
+
+These values are telling your problem directly. Your Eigen version is 3.2.192 instead of 3.3.0. So we need to upgrade this package.
+
+    Install the latest version of eigen from http://eigen.tuxfamily.org/index.php?title=Main_Page .
+
+    Extract the file wherever you want and rename it to eigen3.
+
+    cd /usr/include
+
+    sudo rm -rf eigen3/
+
+    Place the file you just extracted withsudo mv path/of/eigen3 /usr/local/include/
+
+    Lastly check the version again with cat /usr/local/include/eigen3/Eigen/src/Core/util/Macros.h | grep VERSION
+
+You should see these variables:
+
+EIGEN_WORLD_VERSION 3
+ EIGEN_MAJOR_VERSION 3
+ EIGEN_MINOR_VERSION 4
+
+You can run sudo make install again in the caffe2 directory and you will see that everything will be installed succesfully!
