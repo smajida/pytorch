@@ -316,3 +316,9 @@ EIGEN_WORLD_VERSION 3
  EIGEN_MINOR_VERSION 4
 
 You can run sudo make install again in the caffe2 directory and you will see that everything will be installed succesfully!
+
+
+# no past module found
+pip install future
+# no google module
+pip install google-cloud-storage
